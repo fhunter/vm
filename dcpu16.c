@@ -30,17 +30,9 @@ uint16_t *get_operand( context_t * context, uint16_t a,
   else if( a == 0x1a ) {
     operand_a = &context->ram[context->registers[REGISTER_SP]++];
   }
-  else if( a == 0x1b ) {
-    operand_a = &context->registers[REGISTER_SP];
-    //sp
-  }
-  else if( a == 0x1c ) {
-    operand_a = &context->registers[REGISTER_PC];
-    //pc
-  }
-  else if( a == 0x1d ) {
-    operand_a = &context->registers[REGISTER_O];
-    //o
+  else if( ( a >= 0x1b ) && ( a <= 0x1d ) ) {
+    operand_a = &context->registers[( a - 0x1b ) + REGISTER_SP];
+    //sp,pc,o
   }
   else if( a == 0x1e ) {
     //[next_word]
@@ -65,6 +57,7 @@ void process_one_instruction( context_t * context )
   uint16_t instruction;
   instruction = context->ram[context->registers[REGISTER_PC]++];
   uint16_t b, a, o;
+  uint32_t overflow;
   uint16_t *operand_a, *operand_b;
   uint16_t toper_a, toper_b;
   o = instruction & 0x0ful;
@@ -80,6 +73,9 @@ void process_one_instruction( context_t * context )
           break;
         case 0x01:
           //JSR a: stack <-pc++,pc=a;
+          context->ram[--context->registers[REGISTER_SP]] =
+            context->registers[REGISTER_PC];
+          context->registers[REGISTER_PC] = *operand_a;
           break;
         default:
           //reserved
@@ -96,50 +92,71 @@ void process_one_instruction( context_t * context )
 //add
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      *operand_a = *operand_a + *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with overflow
+      overflow = *operand_a + *operand_b;
+      *operand_a = ( uint16_t ) overflow;
+      context->registers[REGISTER_O] = overflow >> 16;
       break;
     case 0x3:
 //sub
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
+      if( *operand_a < *operand_b ) {
+      context->registers[REGISTER_O] = 0xffff}
+      else {
+        context->registers[REGISTER_O] = 0;
+      };
       *operand_a = *operand_a - *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
       break;
     case 0x4:
 //mul
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      *operand_a = *operand_a * *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
+      overflow = *operand_a * *operand_b;
+      *operand_a = overflow;
+      context->registers[REGISTER_O] = ( overflow >> 16 );
       break;
     case 0x5:
 //div
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      *operand_a = *operand_a / *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
+      if( *operand_b == 0 ) {
+        *operand_a = 0;
+        context->registers[REGISTER_O] = 0;
+        break;
+      }
+      else {
+        overflow = *operand_a << 16;
+        overflow /= *operand_b;
+        *operand_a = *operand_a / *operand_b;
+        context->registers[REGISTER_O] = overflow;
+      };
       break;
     case 0x6:
 //mod
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      *operand_a = *operand_a % *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
+      if( *operand_b == 0 ) {
+        *operand_a = 0;
+      }
+      else {
+        *operand_a = *operand_a % *operand_b;
+      };
       break;
     case 0x7:
 //shl
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
+      overflow = ( *operand_a << *operand_b ) >> 16;
       *operand_a = *operand_a << *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
+      context->registers[REGISTER_O] = overflow;
       break;
     case 0x8:
 //shr
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
+      overflow = ( *operand_a << 16 ) >> *operand_b;
       *operand_a = *operand_a >> *operand_b;
-//      context->registers[REGISTER_O]= //FIXME: fill with underflow
+      context->registers[REGISTER_O] = overflow;
       break;
     case 0x9:
 //and
@@ -163,44 +180,32 @@ void process_one_instruction( context_t * context )
 //ife
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      if( *operand_a == *operand_b ) {
-        //perform next command
-      }
-      else {
-        //skip
+      if( *operand_a != *operand_b ) {
+        context->registers[REGISTER_PC]++;
       };
       break;
     case 0xd:
 //ifn
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      if( *operand_a != *operand_b ) {
-        //perform next command
-      }
-      else {
-        //skip
+      if( *operand_a == *operand_b ) {
+        context->registers[REGISTER_PC]++;
       };
       break;
     case 0xe:
 //ifg
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      if( *operand_a > *operand_b ) {
-        //perform next command
-      }
-      else {
-        //skip
+      if( *operand_a <= *operand_b ) {
+        context->registers[REGISTER_PC]++;
       };
       break;
     case 0xf:
 //ifb
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
-      if( ( *operand_a & *operand_b ) != 0 ) {
-        //perform next command
-      }
-      else {
-        //skip
+      if( ( *operand_a & *operand_b ) == 0 ) {
+        context->registers[REGISTER_PC]++;
       };
       break;
   };
