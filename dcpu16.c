@@ -1,5 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "dcpu16.h"
+
+const int register_count = 11;
 
 uint16_t *get_operand( context_t * context, uint16_t a,
                        uint16_t * temp )
@@ -210,4 +213,14 @@ void process_one_instruction( context_t * context )
       };
       break;
   };
+};
+
+void print_status(context_t * context ){
+    uint16_t i;
+    static int step=0;
+    printf("%04d :",step++);
+    for(i=REGISTER_A;i<=REGISTER_O;i++){
+        printf(" %3s:%04x ",(char*[]){"A","B","C","X","Y","Z","I","J","SP","PC","O"}[i],context->registers[i]);
+    };
+    printf("\n");
 };

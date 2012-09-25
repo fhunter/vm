@@ -2,7 +2,6 @@
 #define DCPU16_H_
 #include <stdint.h>
 
-const int register_count = 11;
 enum
 {
   REGISTER_A = 0,
@@ -25,5 +24,6 @@ typedef struct
 } context_t;
 
 void process_one_instruction( context_t * context );
+void print_status( context_t * context );
 
 #endif
