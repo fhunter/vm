@@ -22,7 +22,6 @@ typedef struct
 {
   uint16_t ram[( 1 << 16 )];
   uint16_t registers[11];
-
 } context_t;
 
 void process_one_instruction( context_t * context );
