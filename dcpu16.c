@@ -101,7 +101,8 @@ void process_one_instruction( context_t * context )
       operand_a = get_operand( context, a, &toper_a );
       operand_b = get_operand( context, b, &toper_b );
       if( *operand_a < *operand_b ) {
-      context->registers[REGISTER_O] = 0xffff}
+        context->registers[REGISTER_O] = 0xffff;
+      }
       else {
         context->registers[REGISTER_O] = 0;
       };
