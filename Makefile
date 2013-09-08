@@ -1,6 +1,11 @@
-CFLAGS=-g -Wall -Werror
+CFLAGS=-g -Wall
 LDFLAGS=-g
 
 all: main
 
-main: main.o dcpu16.o
+main: main.o
+
+main.o: main.c ivm.h
+
+clean:
+	rm -f main *.o
