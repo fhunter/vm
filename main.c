@@ -28,9 +28,12 @@ int main( int argc, char **argv )
   i = read(STDIN_FILENO, ram, sizeof(ram));
   printf("loaded %d bytes\n",i);
   ivm_reset();
+  i = 0;
   while( 1 ) {
     ivm_step(ram[ivm_pc]);
-    printf("ivm_pc=%04x\tivm_dp=%08x\tivm_rs=%08x\n",ivm_pc,ivm_dp,ivm_rs);
+    printf("i=%04x ivm_pc=%04x\tivm_dp=%08x\tivm_rs=%08x\n",i,ivm_pc,ivm_dp,ivm_rs);
+    usleep(100000);
+    i++;
   };
   return 0;
 };
