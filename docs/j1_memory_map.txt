@@ -4,36 +4,21 @@ Memory map, j1 cpu:
 
 first 8k - ROM/RAM program storage.
 +----+------------------------------+
-|ffff|                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
-|    |                              |
+|ffff|Display RAM                   |
+|fe00|512 words                     |
 +----+------------------------------+
-|    |                              |
+|fdff|Peripherials                  |
+|fc00|512 words                     |
++----+------------------------------+
+|fbff|Optional RAM                  |
+|2000|                              |
++----+------------------------------+
+|1fff|RAM/ROM program storage       |
 |0000|                              |
 +----+------------------------------+
 
+VM Image file format
+Name: 16 bytes.
+Original executable file: <string??? path??>
+Allocated addresses: 32 bytes, bitmap
+Ram: remaining bytes (document - how)
