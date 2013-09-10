@@ -3,6 +3,7 @@
 #include <strings.h>
 #include "launcher.h"
 #include "ivm.h"
+#include "bitmaps.h"
 
 #define RAMSIZE	65536
 #define PAGESIZE 256
@@ -16,7 +17,7 @@ static void ivm_mem_put(uint16_t addr, uint16_t value)
 		//Access RAM
 		ram[addr]=value;
 		//Update bitmap
-//		set_bit(ram_bitmap,addr);
+		set_bit(ram_bitmap,addr);
 	} else
 	{
 		if(addr>0xff00){
