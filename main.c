@@ -8,18 +8,24 @@ uint16_t ram[65536];
 
 static void ivm_mem_put(uint16_t addr, uint16_t value)
 {
-	ram[addr]=value;
-	if(addr<(65536/2))
-	{
-		printf("Written mem[%08x]=%08x\n",addr,value);
+	if(addr<0xfc00){
+		//Access RAM
+		ram[addr]=value;
 	} else
 	{
-		printf("Written mem[%08x]=%08x\n",addr,value);
+		//Access peripherials
 	}
 };
 static uint16_t ivm_mem_get(uint16_t addr)
 {
-	return ram[addr];
+	if(addr<0xfc00){
+		//Access RAM
+		return ram[addr];
+	} else
+	{
+		//Access peripherials
+		return 0;
+	}
 };
 
 int main( int argc, char **argv )
