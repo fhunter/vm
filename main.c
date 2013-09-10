@@ -1,3 +1,7 @@
+/** \file main.c
+  * \author Nikolay Zamotaev
+  * \brief Main program file for programmable watch
+  */
 #include <stdio.h>
 #include <unistd.h>
 #include <strings.h>

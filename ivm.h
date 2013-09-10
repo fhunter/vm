@@ -1,5 +1,8 @@
 #ifndef __IVM_H__
 #define __IVM_H__
+/** \file ivm.h
+  * \brief J1 Virtual machine code and definitions
+  */
 
 #include <inttypes.h>
 
