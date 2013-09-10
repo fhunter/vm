@@ -46,7 +46,10 @@ enum {
 	ALU_OP_ULESS  = 15
 };
 
-static uint16_t ivm_ds[16], ivm_rs[16]; /* data stack and return stack */
+/** \brief Data stack */
+static uint16_t ivm_ds[16]; 
+/** \brief Return stack */
+static uint16_t ivm_rs[16]; 
 static int8_t ivm_dp, ivm_rp; /* top of data stack, next on data stack, top of ret stack */
 static int16_t ivm_pc;
 
@@ -55,6 +58,9 @@ static inline void ivm_reset() {
 	ivm_dp = ivm_rp = -1;
 }
 
+/** \brief Perform one command step for VM
+  * \param word -- instruction word to run
+  */
 static inline void ivm_step(uint16_t word) {
 	if (word & 0x8000) {
 		ivm_ds[++ivm_dp] = ARG_LIT(word);
