@@ -50,9 +50,14 @@ enum {
 static uint16_t ivm_ds[16]; 
 /** \brief Return stack */
 static uint16_t ivm_rs[16]; 
-static int8_t ivm_dp, ivm_rp; /* top of data stack, next on data stack, top of ret stack */
+/** \brief top of data stack */
+static int8_t ivm_dp;
+/** \brief top of return stack */
+static int8_t ivm_rp; 
+/** \brief Program counter for virtual machine */
 static int16_t ivm_pc;
 
+/** \brief Reset the state of virtual machine to initial one */
 static inline void ivm_reset() {
 	ivm_pc = 0;
 	ivm_dp = ivm_rp = -1;
