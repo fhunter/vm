@@ -8,6 +8,11 @@
 
 #include <stdint.h>
 
+/** \brief Calculates bitmap size for the ramsize and page size
+  * \param ramsize -- memory size, to calculate bitmap for
+  * \return size of bitmap in bytes
+  */
+#define get_bitmap_size( ramsize, pagesize )	((ramsize)/(pagesize)/8)
 void set_bit( uint8_t * map, uint16_t addr );
 void clr_bit( uint8_t * map, uint16_t addr );
 uint8_t get_bit( uint8_t * map, uint16_t addr );

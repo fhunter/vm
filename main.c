@@ -7,13 +7,13 @@
 #include <strings.h>
 #include "launcher.h"
 #include "ivm.h"
-#include "bitmaps.h"
 
 #define RAMSIZE	65536
 #define PAGESIZE 256
+#include "bitmaps.h"
 
-uint16_t ram[65536];
-uint8_t ram_bitmap[RAMSIZE/PAGESIZE/(sizeof(uint8_t)*8)];
+uint16_t ram[RAMSIZE];
+uint8_t ram_bitmap[get_bitmap_size(RAMSIZE,PAGESIZE)];
 
 static void ivm_mem_put(uint16_t addr, uint16_t value)
 {
