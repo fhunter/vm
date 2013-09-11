@@ -1,5 +1,7 @@
 *.o
 *.swp
+*.d
+*.P
 main
 html
 latex
