@@ -13,6 +13,7 @@
   * \return size of bitmap in bytes
   */
 #define get_bitmap_size( ramsize, pagesize )	((ramsize)/(pagesize)/8)
+void clr_allbits( uint8_t * map );
 void set_bit( uint8_t * map, uint16_t addr );
 void clr_bit( uint8_t * map, uint16_t addr );
 uint8_t get_bit( uint8_t * map, uint16_t addr );

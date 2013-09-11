@@ -32,6 +32,18 @@ void set_bit( uint8_t * map, uint16_t addr )
   map[temp >> 3] |= ( 1 << ( temp & 0x07u ) );
 };
 
+/** \brief clear all bitmap
+  * \param map -- bitmap to clear
+  * \bug Really slow and straightforward
+  */
+void clr_allbits( uint8_t * map )
+{
+  int i;
+  for( i = 0; i < 65536; i++ ) {
+    clr_bit( map, i );
+  };
+};
+
 /** \brief Clears bit in bitmap
   * \param map -- pointer to bitmap
   * \param addr -- address for which to clear the bit in bitmap
