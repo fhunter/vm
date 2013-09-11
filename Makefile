@@ -12,7 +12,9 @@ doc:
 	doxygen Doxyfile
 
 %.o : %.c
-	@g++ -MD -c -o $@ $<
-	@cp $*.d $*.P; sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $*.d >> $*.P; rm -f $*.d
+	$(CC) -MD -c -o $@ $<
+	cp $*.d $*.P
+	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $*.d >> $*.P
+	rm -f $*.d
 
 -include *.P
