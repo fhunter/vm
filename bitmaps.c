@@ -24,7 +24,6 @@ static uint8_t pagesize2bits( uint16_t pagesize )
 /** \brief Sets bit in bitmap
   * \param map -- pointer to bitmap
   * \param addr -- address for which to set the bit in bitmap
-  * \todo Implement
   */
 void set_bit( uint8_t * map, uint16_t addr )
 {
@@ -36,7 +35,6 @@ void set_bit( uint8_t * map, uint16_t addr )
 /** \brief Clears bit in bitmap
   * \param map -- pointer to bitmap
   * \param addr -- address for which to clear the bit in bitmap
-  * \todo Implement
   */
 void clr_bit( uint8_t * map, uint16_t addr )
 {
@@ -50,7 +48,6 @@ void clr_bit( uint8_t * map, uint16_t addr )
   * \param addr -- address for which to check the bit in bitmap
   * \return 0 -- if the bit is not set
   * \return non-zero -- if the bit is set
-  * \todo Implement
   */
 uint8_t get_bit( uint8_t * map, uint16_t addr )
 {
