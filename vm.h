@@ -7,7 +7,10 @@
 
 #include "memory.h"
 #include "bitmaps.h"
+
+/** \brief Memory size in words */
 #define RAMSIZE	65536           //FIXME: is this the place?
+/** \brief Memory page size for indirection and swapping */
 #define PAGESIZE 256
 
 struct t_virtual_machine
