@@ -56,14 +56,17 @@ int main( int argc, char **argv )
           }
         case 3:
           {
-            printf( "alu  %s T'=%s %s %s %s rstack+=%d dstack+=%d",
+            int rs = ( code & 0x0c ) >> 2;
+            int ds = ( code & 0x03 );
+            rs = ( rs & 0x02 ) ? rs | ( -3 ) : rs;
+            ds = ( ds & 0x02 ) ? ds | ( -3 ) : ds;
+            printf( "alu  %s T'=%s %s %s %s rstack+=%+d dstack+=%+d",
                     code & ( 1 << 12 ) ? "r->pc" : "     ",
                     ops[( code >> 8 ) & 0x0f],
                     ( code & ( 1 << 7 ) ) ? "T->N" : "    ",
                     ( code & ( 1 << 6 ) ) ? "T->R" : "    ",
                     ( code & ( 1 << 5 ) ) ? "N->[T]" : "      ",
-                    ( ( int ) code & 0x0c ) >> 2,
-                    ( ( int ) code & 0x03 ) );
+                    rs, ds );
             break;
           };
         default:
@@ -74,4 +77,5 @@ int main( int argc, char **argv )
     };
     printf( "\n" );
   }
+  return 0;
 };
