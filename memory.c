@@ -5,6 +5,9 @@
 #include "memory.h"
 #include "vm.h"
 
+/** \brief Free the memory and clean bitmaps
+  * \param machine -- virtual machine state for the operation
+  */
 void reinit_ram( struct t_virtual_machine *machine )
 {
   int i;
@@ -17,6 +20,13 @@ void reinit_ram( struct t_virtual_machine *machine )
   clr_allbits( machine->ram_bitmap );
 };
 
+/** \brief Write the word to memory address
+  * \param machine -- virtual machine state for the operation
+  * \param addr -- write address
+  * \param value -- data to write
+  * \todo Unimplemented page swapping
+  * \todo Untested
+  */
 void ivm_mem_put( struct t_virtual_machine *machine,
                          uint16_t addr, uint16_t value )
 {
@@ -52,6 +62,14 @@ void ivm_mem_put( struct t_virtual_machine *machine,
   }
 };
 
+/** \brief Read word from memory address
+  * \param machine -- virtual machine state for the operation
+  * \param addr -- read address
+  * \return word at memory address
+  * \todo Unimplemented page swapping
+  * \todo Untested
+  * \note Returns 0, if the page was never accessed
+  */
 uint16_t ivm_mem_get( struct t_virtual_machine *machine,
                              uint16_t addr )
 {

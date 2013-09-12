@@ -8,15 +8,18 @@
 
 #include <inttypes.h>
 
-/** \brief extract alu opcode */
+/** \brief extract opcode */
 #define OP(x)  ((x) & (0xe000))
 /** \brief extract call/jump/jumpz argument */
 #define ARG(x) ((x) & (0x1fff))
 /** \brief extract literal */
 #define ARG_LIT(x) ((x) & 0x7fff)
 
+/** \brief extract alu opcode */
 #define ALU_OP(x)   (x & (0xf << 8))
+/** \brief extract data stack pointer movement */
 #define ALU_DS(x)		(x & (0x3 << 0))
+/** \brief extract return stack pointer movement */
 #define ALU_RS(x)		(x & (0x3 << 2))
 
 /* Operation types */
@@ -50,7 +53,9 @@ enum
   ALU_OP_ULESS = 15
 };
 
-/** \brief Reset the state of virtual machine to initial one */
+/** \brief Reset the state of virtual machine to initial one
+  * \param machine -- virtual machine state to reset
+  */
 inline void ivm_reset( struct t_virtual_machine *machine )
 {
   machine->ivm_pc = 0;
@@ -58,6 +63,7 @@ inline void ivm_reset( struct t_virtual_machine *machine )
 }
 
 /** \brief Perform one command step for VM
+  * \param machine -- virtual machine descriptor from which to run
   * \param word -- instruction word to run
   */
 inline void ivm_step( struct t_virtual_machine *machine,
