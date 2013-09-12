@@ -8,9 +8,6 @@
 #include <string.h>
 #include "launcher.h"
 #include "ivm.h"
-
-#define RAMSIZE	65536
-#define PAGESIZE 256
 #include "bitmaps.h"
 
 uint16_t *ram_pointers[RAMSIZE / PAGESIZE];

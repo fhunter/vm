@@ -3,6 +3,9 @@
 /** \file ivm.h
   * \brief J1 Virtual machine code and definitions
   */
+#define RAMSIZE	65536           //FIXME: is this the place?
+#define PAGESIZE 256
+#include "bitmaps.h"
 
 #include <inttypes.h>
 
@@ -13,6 +16,24 @@
 #define ALU_OP(x)   (x & (0xf << 8))
 #define ALU_DS(x)		(x & (0x3 << 0))
 #define ALU_RS(x)		(x & (0x3 << 2))
+
+struct t_virtual_machine
+{
+/** \brief Data stack */
+  uint16_t ivm_ds[16];
+/** \brief Return stack */
+  uint16_t ivm_rs[16];
+/** \brief top of data stack */
+  int8_t ivm_dp;
+/** \brief top of return stack */
+  int8_t ivm_rp;
+/** \brief Program counter for virtual machine */
+  int16_t ivm_pc;
+/** \brief Ram pages bitmap */
+  uint8_t ram_bitmap[get_bitmap_size( RAMSIZE, PAGESIZE )];
+/** \brief Ram pages pointers */
+  uint16_t *ram_pointers[RAMSIZE / PAGESIZE];
+};
 
 static void ivm_mem_put( uint16_t addr, uint16_t value );
 static uint16_t ivm_mem_get( uint16_t addr );
