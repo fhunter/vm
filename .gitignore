@@ -3,5 +3,6 @@
 *.d
 *.P
 main
+j1disasm/disassembler
 html
 latex

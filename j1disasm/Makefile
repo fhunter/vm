@@ -1,5 +1,5 @@
-LDFLAGS=-g
-CFLAGS=-g
+LDFLAGS=-g 
+CFLAGS=-g -Wall
 
 all: disassembler
 

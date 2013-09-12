@@ -22,3 +22,5 @@ doc:
 	rm -f $*.d
 
 -include *.P
+
+.PHONY: j1disasm
