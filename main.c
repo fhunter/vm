@@ -11,7 +11,8 @@
 #include "bitmaps.h"
 #include "memory.h"
 
-
+/** \brief main program function
+  */
 int main( int argc, char **argv )
 {
   int i = 0, total = 0;
