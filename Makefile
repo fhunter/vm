@@ -3,7 +3,7 @@ LDFLAGS=-g
 
 all: main j1disasm
 
-main: main.o bitmaps.o state.o memory.o
+main: main.o bitmaps.o state.o memory.o vm.o
 
 j1disasm:
 	make -C j1disasm
