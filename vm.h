@@ -13,6 +13,7 @@
 /** \brief Memory page size for indirection and swapping */
 #define PAGESIZE 256
 
+/** \brief Virtual machine state descriptor */
 struct t_virtual_machine
 {
 /** \brief Data stack */

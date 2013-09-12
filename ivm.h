@@ -8,8 +8,11 @@
 
 #include <inttypes.h>
 
+/** \brief extract alu opcode */
 #define OP(x)  ((x) & (0xe000))
+/** \brief extract call/jump/jumpz argument */
 #define ARG(x) ((x) & (0x1fff))
+/** \brief extract literal */
 #define ARG_LIT(x) ((x) & 0x7fff)
 
 #define ALU_OP(x)   (x & (0xf << 8))
