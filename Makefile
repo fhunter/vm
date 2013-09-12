@@ -1,12 +1,16 @@
 CFLAGS=-g -Wall -O3
 LDFLAGS=-g
 
-all: main
+all: main j1disasm
 
 main: main.o bitmaps.o state.o memory.o
 
+j1disasm:
+	make -C j1disasm
+
 clean:
 	rm -f main *.o *.P
+	make -C j1disasm clean
 
 doc:
 	doxygen Doxyfile
