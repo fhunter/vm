@@ -19,6 +19,8 @@ int main( int argc, char **argv )
   uint16_t counter = 0;
   uint16_t buf[PAGESIZE];
   struct t_virtual_machine machine;
+  machine.ram_bitmap=bitmap_create(RAMSIZE, PAGESIZE);
+  bitmap_clearall(machine.ram_bitmap);
   while( ( i = read( STDIN_FILENO, buf, sizeof( buf ) ) ) > 0 ) {
     //allocate ram for program
     machine.ram_pointers[counter] =
@@ -26,7 +28,7 @@ int main( int argc, char **argv )
     //copy loaded page
     memcpy( machine.ram_pointers[counter], buf, i );
     //set page occupied bit
-    set_bit( machine.ram_bitmap, counter * PAGESIZE + 1 );
+    bitmap_set( machine.ram_bitmap, counter * PAGESIZE + 1 );
     counter++;
     total += i;
   };
@@ -41,5 +43,6 @@ int main( int argc, char **argv )
     usleep( 100000 );
     i++;
   };
+  bitmap_destroy(machine.ram_bitmap);
   return 0;
 };

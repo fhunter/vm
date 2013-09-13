@@ -14,10 +14,23 @@
   * \return size of bitmap in bytes
   */
 #define get_bitmap_size( ramsize, pagesize )	((ramsize)/(pagesize)/8)
+/** \brief Structure describing ram page residency bitmap
+  */
+struct t_bitmap
+{
+  /** \brief RAM size argument */
+  uint32_t ramsize;
+  /** \brief RAM page size argument, must be power of 2 */
+  uint32_t pagesize;
+  /** \brief Bitmap itself. Must be allocated by bitmap_create */
+  unsigned int *bitmap;
+};
 
-void clr_allbits( uint8_t * map );
-void set_bit( uint8_t * map, uint16_t addr );
-void clr_bit( uint8_t * map, uint16_t addr );
-uint8_t get_bit( uint8_t * map, uint16_t addr );
+struct t_bitmap bitmap_create( uint32_t ramsize, uint32_t pagesize );
+void bitmap_destroy(struct t_bitmap map);
+void bitmap_clearall( struct t_bitmap map );
+void bitmap_set( struct t_bitmap map, uint16_t addr );
+void bitmap_clr( struct t_bitmap map, uint16_t addr );
+uint8_t bitmap_get( struct t_bitmap map, uint16_t addr );
 
 #endif

@@ -5,13 +5,12 @@
 #ifndef _VM__H_
 #define _VM__H_
 
-#include "memory.h"
 #include "bitmaps.h"
 
 /** \brief Memory size in words */
 #define RAMSIZE	65536           //FIXME: is this the place?
 /** \brief Memory page size for indirection and swapping */
-#define PAGESIZE 256
+#define PAGESIZE 512
 
 /** \brief Virtual machine state descriptor */
 struct t_virtual_machine
@@ -27,7 +26,7 @@ struct t_virtual_machine
 /** \brief Program counter for virtual machine */
   int16_t ivm_pc;
 /** \brief Ram pages bitmap */
-  uint8_t ram_bitmap[get_bitmap_size( RAMSIZE, PAGESIZE )];
+  struct t_bitmap ram_bitmap;
 /** \brief Ram pages pointers no need to save the pointers, but save the contents */
   uint16_t *ram_pointers[RAMSIZE / PAGESIZE];
 };

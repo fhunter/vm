@@ -2,6 +2,7 @@
   * \author Nikolay Zamotaev
   * \file memory.c
   */
+#include <stdio.h>
 #include "memory.h"
 #include "vm.h"
 
@@ -17,7 +18,7 @@ void reinit_ram( struct t_virtual_machine *machine )
       machine->ram_pointers[i] = NULL;
     }
   }
-  clr_allbits( machine->ram_bitmap );
+  bitmap_clearall( machine->ram_bitmap );
 };
 
 /** \brief Write the word to memory address
@@ -32,7 +33,7 @@ void ivm_mem_put( struct t_virtual_machine *machine,
 {
   if( addr < 0xfc00 ) {
     //Access RAM
-    if( get_bit( machine->ram_bitmap, addr ) ) {
+    if( bitmap_get( machine->ram_bitmap, addr ) ) {
       //the memory was already accessed
       if( machine->ram_pointers[addr >> 8] == NULL ) {
         //memory is swapped out
@@ -49,7 +50,7 @@ void ivm_mem_put( struct t_virtual_machine *machine,
         calloc( PAGESIZE, sizeof( uint16_t ) );
       machine->ram_pointers[addr >> 8][addr & 0xfful] = value;
       //Update bitmap
-      set_bit( machine->ram_bitmap, addr );
+      bitmap_set( machine->ram_bitmap, addr );
     }
   }
   else {
@@ -75,7 +76,7 @@ uint16_t ivm_mem_get( struct t_virtual_machine *machine,
 {
   if( addr < 0xfc00 ) {
     //Access RAM
-    if( get_bit( machine->ram_bitmap, addr ) ) {
+    if( bitmap_get( machine->ram_bitmap, addr ) ) {
       if( machine->ram_pointers[addr >> 8] == NULL ) {
         //Address not found, must fetch from disk.
         //Unimplemented
