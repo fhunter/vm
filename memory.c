@@ -55,7 +55,7 @@ void ivm_mem_put( struct t_virtual_machine *machine,
   }
   else {
     if( addr > 0xff00 ) {
-      printf( "\033[%d;%dH%c", ( 0xffff - addr ) / 16,
+      printf( "\0337\033[%d;%dH%c\0338", ( 0xffff - addr ) / 16,
               ( 0xffff - addr ) % 16, value );
       //Video RAM
     }
