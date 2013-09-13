@@ -59,7 +59,8 @@ enum
 inline void ivm_reset( struct t_virtual_machine *machine )
 {
   machine->ivm_pc = 0;
-  machine->ivm_dp = machine->ivm_rp = -1;
+  machine->ivm_dp = -1;
+  machine->ivm_rp = 0;
 }
 
 /** \brief Perform one command step for VM
