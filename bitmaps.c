@@ -23,12 +23,34 @@ static uint8_t pagesize2bits( uint16_t pagesize )
   return 32;
 };
 
+/** \brief Number of bits in unsigned int type */
 #define INT_BIT	(sizeof(unsigned int)*CHAR_BIT)
+/** \brief Creates a bitmask for unsigned int 
+  * \param b -- bit number
+  */
 #define BITMASK( b )		(1<<((b)%INT_BIT))
+/** \brief Gets bit slot number form bit number
+  * \param b -- bit number
+  */
 #define BITSLOT( b )		((b)/INT_BIT)
+/** \brief Set bit in bitmap
+  * \param b -- bit number
+  * \param a -- bitmap
+  */
 #define BITSET( a, b )		((a)[BITSLOT(b)] |= BITMASK(b))
+/** \brief Clear bit in bitmap
+  * \param b -- bit number
+  * \param a -- bitmap
+  */
 #define BITCLEAR( a, b )	((a)[BITSLOT(b)] &= ~BITMASK(b))
+/** \brief Test if bit in bitmap is set
+  * \param b -- bit number
+  * \param a -- bitmap
+  */
 #define BITTEST( a, b )		((a)[BITSLOT(b)] & BITMASK(b))
+/** \brief Gets array size for storing bitmap
+  * \param nb -- number of bits
+  */
 #define BITNSLOTS( nb )		(( nb + INT_BIT - 1 )/INT_BIT)
 
 /** \brief Creates bitmap and allocates memory for it
