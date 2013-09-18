@@ -6,6 +6,7 @@
   * \brief Bit Array operations
   */
 
+#include <stdio.h>
 #include <stdint.h>
 
 /** \brief Calculates bitmap size for the ramsize and page size
@@ -27,10 +28,12 @@ struct t_bitmap
 };
 
 struct t_bitmap bitmap_create( uint32_t ramsize, uint32_t pagesize );
-void bitmap_destroy(struct t_bitmap map);
+void bitmap_destroy( struct t_bitmap map );
 void bitmap_clearall( struct t_bitmap map );
 void bitmap_set( struct t_bitmap map, uint16_t addr );
 void bitmap_clr( struct t_bitmap map, uint16_t addr );
 uint8_t bitmap_get( struct t_bitmap map, uint16_t addr );
+void save_bitmap( struct t_bitmap *map, FILE * state_file );
+void load_bitmap( struct t_bitmap *map, FILE * state_file );
 
 #endif
