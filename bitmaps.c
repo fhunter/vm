@@ -131,3 +131,17 @@ uint8_t bitmap_get( struct t_bitmap map, uint16_t addr )
   temp = addr >> pagesize2bits( map.pagesize );
   return BITTEST( map.bitmap, temp );
 };
+
+/** \todo document
+  * \todo implement
+  */
+void save_bitmap( struct t_bitmap *map, FILE * state_file )
+{
+}
+
+/** \todo document
+  * \todo implement
+  */
+void load_bitmap( struct t_bitmap *map, FILE * state_file )
+{
+}
