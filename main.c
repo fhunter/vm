@@ -19,7 +19,9 @@ int main( int argc, char **argv )
   uint16_t counter = 0;
   uint16_t buf[PAGESIZE];
   struct t_virtual_machine machine;
+  FILE *new_image = fopen( "state.vm", "w+" );
   machine.ram_bitmap = bitmap_create( RAMSIZE, PAGESIZE );
+  memset(machine.ram_pointers,0,sizeof(machine.ram_pointers));
   bitmap_clearall( machine.ram_bitmap );
   while( ( i = read( STDIN_FILENO, buf, sizeof( buf ) ) ) > 0 ) {
     //allocate ram for program
@@ -31,10 +33,12 @@ int main( int argc, char **argv )
     bitmap_set( machine.ram_bitmap, counter * PAGESIZE + 1 );
     counter++;
     total += i;
+//
   };
   printf( "\033[18;1H \033[17;30r" );
   printf( "loaded %d bytes\n", total );
   ivm_reset( &machine );
+  vm_save_state( new_image, machine );
   i = 0;
   while( 1 ) {
     printf
@@ -44,7 +48,9 @@ int main( int argc, char **argv )
     ivm_step( &machine, ivm_mem_get( &machine, machine.ivm_pc ) );
     usleep( 10000 );
     i++;
+    vm_save_state( new_image, machine );
   };
   bitmap_destroy( machine.ram_bitmap );
+  fclose( new_image );
   return 0;
 };
