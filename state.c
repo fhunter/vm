@@ -7,8 +7,7 @@
 #include "state.h"
 #include "bitmaps.h"
 
-/** \todo implement saving bitmaps
-  * \todo document
+/** \todo document
   */
 int vm_save_state( FILE * state_file, struct t_virtual_machine vm )
 {
@@ -19,6 +18,7 @@ int vm_save_state( FILE * state_file, struct t_virtual_machine vm )
   fwrite( &vm.ivm_dp, sizeof( uint8_t ), 1, state_file );
   fwrite( &vm.ivm_rp, sizeof( uint8_t ), 1, state_file );
   fwrite( &vm.ivm_pc, sizeof( uint16_t ), 1, state_file );
+  fseek( state_file, 96, SEEK_SET );
   save_bitmap( &vm.ram_bitmap, state_file );
   for( i = 0; i < RAMSIZE / PAGESIZE; i++ ) {
     if( bitmap_get( vm.ram_bitmap, i * PAGESIZE ) ) {
@@ -32,8 +32,7 @@ int vm_save_state( FILE * state_file, struct t_virtual_machine vm )
   return 0;
 }
 
-/** \todo implement loading bitmaps
-  * \todo document
+/** \todo document
   */
 int vm_load_state( FILE * state_file, struct t_virtual_machine *vm )
 {
@@ -44,6 +43,7 @@ int vm_load_state( FILE * state_file, struct t_virtual_machine *vm )
   fread( &vm->ivm_dp, sizeof( uint8_t ), 1, state_file );
   fread( &vm->ivm_rp, sizeof( uint8_t ), 1, state_file );
   fread( &vm->ivm_pc, sizeof( uint16_t ), 1, state_file );
+  fseek( state_file, 96, SEEK_SET );
   load_bitmap( &vm->ram_bitmap, state_file );
   if( bitmap_get( vm->ram_bitmap, vm->ivm_pc ) ) {
     fseek( state_file, 512 + i * PAGESIZE, SEEK_SET );

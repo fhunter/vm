@@ -133,15 +133,31 @@ uint8_t bitmap_get( struct t_bitmap map, uint16_t addr )
 };
 
 /** \todo document
-  * \todo implement
   */
 void save_bitmap( struct t_bitmap *map, FILE * state_file )
 {
+  fwrite( &map->ramsize, sizeof( uint32_t ), 1, state_file );
+  fwrite( &map->pagesize, sizeof( uint32_t ), 1, state_file );
+  fwrite( map->bitmap, sizeof( unsigned int ),
+          BITNSLOTS( ( map->ramsize +
+                       map->pagesize ) / map->pagesize ),
+          state_file );
 }
 
 /** \todo document
-  * \todo implement
   */
 void load_bitmap( struct t_bitmap *map, FILE * state_file )
 {
+  if( map->bitmap != NULL ) {
+    free( map->bitmap );
+  }
+  fread( &map->ramsize, sizeof( uint32_t ), 1, state_file );
+  fread( &map->pagesize, sizeof( uint32_t ), 1, state_file );
+  map->bitmap =
+    calloc( BITNSLOTS
+            ( ( map->ramsize + map->pagesize ) / map->pagesize ),
+            sizeof( unsigned int ) );
+  fread( map->bitmap, sizeof( unsigned int ),
+         BITNSLOTS( ( map->ramsize +
+                      map->pagesize ) / map->pagesize ), state_file );
 }

@@ -9,14 +9,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-/** \brief Calculates bitmap size for the ramsize and page size
-  * \param ramsize -- memory size, to calculate bitmap for
-  * \param pagesize -- memory page size
-  * \return size of bitmap in bytes
-  */
-#define get_bitmap_size( ramsize, pagesize )	((ramsize)/(pagesize)/8)
-/** \brief Structure describing ram page residency bitmap
-  */
 struct t_bitmap
 {
   /** \brief RAM size argument */
