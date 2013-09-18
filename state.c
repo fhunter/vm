@@ -17,7 +17,7 @@ int vm_save_state( FILE * state_file, struct t_virtual_machine vm )
   //save_bitmap(vm.ram_bitmap, state_file);
   for( i = 0; i < RAMSIZE / PAGESIZE; i++ ) {
     if( bitmap_get( vm.ram_bitmap, i * PAGESIZE ) ) {
-      if( vm.ram_pointers != NULL ) {
+      if( vm.ram_pointers[i] != NULL ) {
         fseek( state_file, 512 + i * PAGESIZE, SEEK_SET );
         fwrite( vm.ram_pointers[i], sizeof( uint16_t ), PAGESIZE,
                 state_file );
