@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -O3
+CFLAGS=-g -Wall -Os
 LDFLAGS=-g
 
 all: main j1disasm
