@@ -11,5 +11,9 @@
 
 int vm_save_state( FILE * state_file, struct t_virtual_machine vm );
 int vm_load_state( FILE * state_file, struct t_virtual_machine *vm );
+int vm_save_page( FILE * state_file, struct t_virtual_machine *vm,
+                  uint16_t address );
+int vm_load_page( FILE * state_file, struct t_virtual_machine *vm,
+                  uint16_t address );
 
 #endif
