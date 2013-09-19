@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+/** \brief Structure holding bitmap and it's parameters
+  */
 struct t_bitmap
 {
   /** \brief RAM size argument */
