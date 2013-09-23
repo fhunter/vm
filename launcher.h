@@ -5,4 +5,7 @@
 #ifndef _LAUNCHER__H_
 #define _LAUNCHER__H_
 
+#define ROOT_PATH	"../SDCARD/"
+#define STATES_PATH	"states/"
+
 #endif

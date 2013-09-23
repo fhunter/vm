@@ -19,7 +19,7 @@ int main( int argc, char **argv )
   uint16_t counter = 0;
   uint16_t buf[PAGESIZE];
   struct t_virtual_machine machine;
-  FILE *new_image = fopen( "state.vm", "w+" );
+  FILE *new_image = fopen( ROOT_PATH STATES_PATH "state.vm", "w+" );
   machine.ram_bitmap = bitmap_create( RAMSIZE, PAGESIZE );
   memset(machine.ram_pointers,0,sizeof(machine.ram_pointers));
   bitmap_clearall( machine.ram_bitmap );
