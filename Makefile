@@ -12,6 +12,10 @@ OBJS_x86 = $(patsubst %.c, $(INTERMDIR)_x86/%.o, $(SRCS))
 
 all: $(BINARY_x86) $(BINARY_arm) j1disasm
 
+main: $(BINARY_x86)
+
+main_arm: $(BINARY_arm)
+
 $(BINARY_x86): $(OBJS_x86)
 	@if [ ! -d $(INTERMDIR)_x86 ]; then make $(INTERMDIR)_x86; fi
 	$(CC) -o $@ $^
@@ -54,4 +58,4 @@ $(INTERMDIR)_x86/%.o: %.c
 -include $(INTERMDIR)_arm/*.P
 -include $(INTERMDIR)_x86/*.P
 
-.PHONY: j1disasm
+.PHONY: j1disasm main main_arm
