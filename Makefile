@@ -1,5 +1,15 @@
+LIBPATH?=..
+
 CFLAGS=-g -Wall -Os
+CFLAGS_ARM=-fno-common -mcpu=cortex-m3 -mthumb 
 LDFLAGS=-g
+LDFLAGS_ARM =-nostartfiles -T../libs/libopenstm32/libopenstm32.ld 
+LDFLAGS_ARM+=-L$(LIBPATH)/libs/libopenstm32/
+LDFLAGS_ARM+=-L$(LIBPATH)/libs/libusbserial/
+LDFLAGS_ARM+=-L$(LIBPATH)/libs/libconio/
+LDFLAGS_ARM+=-L$(LIBPATH)/libs/libstm32usb/
+LDFLAGS_ARM+=-lopenstm32 -lconio -lstm32usb -lusbserial
+
 PREFIX?= arm-elf-
 CC=gcc
 
@@ -10,7 +20,7 @@ SRCS = main.c bitmaps.c state.c memory.c vm.c ivm.c launcher.c
 OBJS_arm = $(patsubst %.c, $(INTERMDIR)_arm/%.o, $(SRCS))
 OBJS_x86 = $(patsubst %.c, $(INTERMDIR)_x86/%.o, $(SRCS))
 
-all: $(BINARY_x86) $(BINARY_arm) j1disasm
+all: main j1disasm
 
 main: $(BINARY_x86)
 
@@ -18,11 +28,11 @@ main_arm: $(BINARY_arm)
 
 $(BINARY_x86): $(OBJS_x86)
 	@if [ ! -d $(INTERMDIR)_x86 ]; then make $(INTERMDIR)_x86; fi
-	$(CC) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
 
 $(BINARY_arm): $(OBJS_arm)
 	@if [ ! -d $(INTERMDIR)_arm ]; then make $(INTERMDIR)_arm; fi
-	$(PREFIX)$(CC) -nostartfiles -o $@ $^
+	$(PREFIX)$(CC) $(LDFLAGS) $(LDFLAGS_ARM) -o $@ $^
 
 .build_arm:
 	mkdir -p .build_arm
@@ -43,7 +53,7 @@ doc:
 
 $(INTERMDIR)_arm/%.o: %.c
 	@if [ ! -d $(INTERMDIR)_arm ]; then make $(INTERMDIR)_arm; fi
-	$(PREFIX)$(CC) -MD -c $< $(CFLAGS) -o $@
+	$(PREFIX)$(CC) -MD -c $< $(CFLAGS) $(CFLAGS_ARM) -o $@
 	cp $(INTERMDIR)_arm/$*.d $(INTERMDIR)_arm/$*.P
 	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $(INTERMDIR)_arm/$*.d >> $(INTERMDIR)_arm/$*.P
 	rm -f $(INTERMDIR)_arm/$*.d
