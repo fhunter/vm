@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "launcher.h"
+#include "state.h"
 #include "ivm.h"
 #include "bitmaps.h"
 #include "memory.h"
@@ -44,7 +45,7 @@ int main( int argc, char **argv )
     printf
       ( "i=%04x ivm_pc=%04x  ivm_dp=% 2d  ivm_rp=% 2d insn=%04x\n",
         i, machine.ivm_pc, machine.ivm_dp, machine.ivm_rp,
-        ivm_mem_get( &machine, machine.ivm_pc ) & 0xfffful );
+        ivm_mem_get( &machine, machine.ivm_pc ) & 0xffffu );
     ivm_step( &machine, ivm_mem_get( &machine, machine.ivm_pc ) );
     usleep( 10000 );
     i++;
