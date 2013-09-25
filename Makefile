@@ -1,6 +1,7 @@
 LIBPATH?=..
+VPATH=.:peripherials
 
-CFLAGS=-g -Wall -Os
+CFLAGS=-g -Wall -Os -DEMU=1 -Werror
 CFLAGS_ARM=-fno-common -mcpu=cortex-m3 -mthumb 
 LDFLAGS=-g
 LDFLAGS_ARM =-nostartfiles -T../libs/libopenstm32/libopenstm32.ld 
@@ -16,9 +17,9 @@ CC=gcc
 INTERMDIR=.build
 BINARY_x86=$(INTERMDIR)_x86/main
 BINARY_arm=$(INTERMDIR)_arm/main
-SRCS = main.c bitmaps.c state.c memory.c vm.c ivm.c launcher.c
-OBJS_arm = $(patsubst %.c, $(INTERMDIR)_arm/%.o, $(SRCS))
-OBJS_x86 = $(patsubst %.c, $(INTERMDIR)_x86/%.o, $(SRCS))
+OBJS = main.o bitmaps.o state.o memory.o vm.o ivm.o launcher.o buttons.o lcd.o
+OBJS_arm = $(patsubst %.o, $(INTERMDIR)_arm/%.o, $(OBJS))
+OBJS_x86 = $(patsubst %.o, $(INTERMDIR)_x86/%.o, $(OBJS))
 
 all: main j1disasm
 
