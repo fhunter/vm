@@ -46,7 +46,7 @@ void ivm_step( struct t_virtual_machine *machine, uint16_t word )
       machine->ivm_pc = ARG( word );
       break;
     case OP_ALU:{
-        uint16_t t, n = 0, r, res;
+        uint16_t t, n = 0, r, res = 0;
         t = machine->ivm_ds[machine->ivm_dp];
         if( machine->ivm_dp > 0 ) {
           n = machine->ivm_ds[machine->ivm_dp - 1];
