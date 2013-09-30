@@ -3,6 +3,14 @@
   */
 #include "lcd.h"
 
+void lcd_init(  )
+{
+};
+
+void lcd_done(  )
+{
+};
+
 void lcd_fill( uint8_t colour )
 {
 };

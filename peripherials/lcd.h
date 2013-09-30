@@ -5,6 +5,8 @@
 #define _LCD__H_
 #include <stdint.h>
 
+void lcd_init(  );
+void lcd_done(  );
 void lcd_fill( uint8_t colour );
 void lcd_fillarea( uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
                    uint8_t colour );
