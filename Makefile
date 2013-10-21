@@ -2,16 +2,18 @@ LIBPATH?=..
 VPATH=.:peripherials
 
 CFLAGS=-g -Wall -Os -DEMU=1 -Werror
-CFLAGS_ARM=-fno-common -mcpu=cortex-m3 -mthumb 
+CFLAGS_ARM=-fno-common -mcpu=cortex-m3 -mthumb
 LDFLAGS=-g
-LDFLAGS_ARM =-nostartfiles -T../libs/libopenstm32/libopenstm32.ld 
+LDFLAGS_ARM =-nostartfiles -T../libs/libopenstm32/libopenstm32.ld -nostdlib
 LDFLAGS_ARM+=-L$(LIBPATH)/libs/libopenstm32/
 LDFLAGS_ARM+=-L$(LIBPATH)/libs/libusbserial/
 LDFLAGS_ARM+=-L$(LIBPATH)/libs/libconio/
 LDFLAGS_ARM+=-L$(LIBPATH)/libs/libstm32usb/
-LDFLAGS_ARM+=-lopenstm32 -lconio -lstm32usb -lusbserial
+LDFLAGS_ARM+=-L$(LIBPATH)/libs/newlib/
+LDFLAGS_ARM+=-L/usr/lib/gcc/arm-linux-gnueabi/4.3.5
+LDFLAGS_ARM+=-Wl,--start-group -lopenstm32 -lconio -lstm32usb -lusbserial -lgcc -lc -lm -lg -lnosys -Wl,--end-group
 
-PREFIX?= arm-elf-
+PREFIX?= arm-linux-gnueabi-
 CC=gcc
 
 INTERMDIR=.build
@@ -33,7 +35,7 @@ $(BINARY_x86): $(OBJS_x86)
 
 $(BINARY_arm): $(OBJS_arm)
 	@if [ ! -d $(INTERMDIR)_arm ]; then make $(INTERMDIR)_arm; fi
-	$(PREFIX)$(CC) $(LDFLAGS) $(LDFLAGS_ARM) -o $@ $^
+	$(PREFIX)$(CC) $^ $(LDFLAGS) $(LDFLAGS_ARM) -o $@
 
 .build_arm:
 	mkdir -p .build_arm
