@@ -52,6 +52,7 @@ int vm_load_state( FILE * state_file, struct t_virtual_machine *vm )
       vm->ram_pointers[i] = NULL;
     }
     //Read only the page, where PC is located, other will be read on an as needed basis
+    i=vm->ivm_pc/vm->ram_bitmap.pagesize;
     vm->ram_pointers[i] = calloc( PAGESIZE, sizeof( uint16_t ) );
     fread( vm->ram_pointers[i], sizeof( uint16_t ), PAGESIZE,
            state_file );
