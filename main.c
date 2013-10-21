@@ -47,7 +47,6 @@ int main( int argc, char **argv )
         i, machine.ivm_pc, machine.ivm_dp, machine.ivm_rp,
         ivm_mem_get( &machine, machine.ivm_pc ) & 0xffffu );
     ivm_step( &machine, ivm_mem_get( &machine, machine.ivm_pc ) );
-    usleep( 10000 );
     i++;
     vm_save_state( new_image, machine );
   };
