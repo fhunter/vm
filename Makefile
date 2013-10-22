@@ -49,7 +49,7 @@ utils:
 clean:
 	rm -f *.o *.P
 	rm -rf $(INTERMDIR)_x86 $(INTERMDIR)_arm
-	make -C j1disasm clean
+	make -C utils clean
 
 doc:
 	doxygen Doxyfile
