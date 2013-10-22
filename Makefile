@@ -23,7 +23,7 @@ OBJS = main.o bitmaps.o state.o memory.o vm.o ivm.o launcher.o buttons.o lcd.o
 OBJS_arm = $(patsubst %.o, $(INTERMDIR)_arm/%.o, $(OBJS))
 OBJS_x86 = $(patsubst %.o, $(INTERMDIR)_x86/%.o, $(OBJS))
 
-all: main j1disasm
+all: main utils
 
 main: $(BINARY_x86)
 
@@ -43,8 +43,8 @@ $(BINARY_arm): $(OBJS_arm)
 .build_x86:
 	mkdir -p .build_x86
 
-j1disasm:
-	make -C j1disasm
+utils:
+	make -C utils
 
 clean:
 	rm -f *.o *.P
