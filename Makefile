@@ -43,13 +43,13 @@ $(BINARY_arm): $(OBJS_arm)
 .build_x86:
 	mkdir -p .build_x86
 
-utils:
-	make -C utils
+utils: 
+	+make -C utils 
 
 clean:
 	rm -f *.o *.P
 	rm -rf $(INTERMDIR)_x86 $(INTERMDIR)_arm
-	make -C utils clean
+	+make -C utils clean 
 
 doc:
 	doxygen Doxyfile
