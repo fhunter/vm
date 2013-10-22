@@ -1,7 +1,10 @@
 LDFLAGS=-g 
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -I../
+VPATH=.:..
 
-all: disassembler
+all: disassembler vmimage
+
+vmimage: vmimage.o state.o bitmaps.o
 
 clean:
-	rm -f disassembler *.o
+	rm -f disassembler vmimage *.o *.*~

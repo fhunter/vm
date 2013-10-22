@@ -71,4 +71,4 @@ $(INTERMDIR)_x86/%.o: %.c
 -include $(INTERMDIR)_arm/*.P
 -include $(INTERMDIR)_x86/*.P
 
-.PHONY: j1disasm main main_arm
+.PHONY: utils main main_arm

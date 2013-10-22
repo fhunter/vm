@@ -3,6 +3,7 @@
 *.d
 *.P
 main
-j1disasm/disassembler
+utils/disassembler
+utils/vmimage
 html
 latex
