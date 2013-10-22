@@ -50,9 +50,10 @@ int main( int argc, char **argv )
   struct dirent *result;
   while( ( result = readdir( dir1 ) ) != NULL ) {
     //Проверить имя файла, если это .vm - залить в память структуры.
-    if( strstr( result->d_name, ".vm" ) ==
-        ( result->d_name + strlen( result->d_name ) -
-          strlen( ".vm" )  ) ) {
+    char *temp1 = NULL;
+    temp1 = strstr( result->d_name, ".vm" );
+    if( ( temp1 - result->d_name ) ==
+        ( strlen( result->d_name ) - strlen( ".vm" ) ) ) {
       struct stat filestat;
       stat( result->d_name, &filestat );
       if( !S_ISREG( filestat.st_rdev ) )
