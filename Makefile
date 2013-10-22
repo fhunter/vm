@@ -1,7 +1,7 @@
 LIBPATH?=..
 VPATH=.:peripherials
 
-CFLAGS=-g -Wall -Os -DEMU=1 -Werror
+CFLAGS=-g -Wall -O0 -DEMU=1 -Werror
 CFLAGS_ARM=-fno-common -mcpu=cortex-m3 -mthumb
 LDFLAGS=-g
 LDFLAGS_ARM =-nostartfiles -T../libs/libopenstm32/libopenstm32.ld -nostdlib
