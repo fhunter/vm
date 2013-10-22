@@ -56,7 +56,7 @@ int main( int argc, char **argv )
         ( strlen( result->d_name ) - strlen( ".vm" ) ) ) {
       struct stat filestat;
       stat( result->d_name, &filestat );
-      if( !S_ISREG( filestat.st_rdev ) )
+      if( !S_ISREG( filestat.st_mode ) )
         continue;
       //В имени не только .vm есть, но и расположен он в конце
       //Это образ состояния виртуалки. Загружаем
