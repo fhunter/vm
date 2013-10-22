@@ -102,8 +102,6 @@ int main( int argc, char **argv )
   //End reading VMs
 
   printf( "\033[18;1H \033[17;30r" );
-//  ivm_reset( &machine );
-//  vm_save_state( new_image, machine );
   while( 1 ) {
     struct t_virtual_machine *machine;
     machine = current_machine->machine_ptr;
