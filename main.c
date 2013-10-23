@@ -49,9 +49,9 @@ int main( int argc, char **argv )
   struct dirent *directory_entry;
   while( ( directory_entry = readdir( vm_images_dir ) ) != NULL ) {
     //Проверить имя файла, если это .vm - залить в память структуры.
-    char *temp1 = NULL;
-    temp1 = strstr( directory_entry->d_name, ".vm" );
-    if( ( temp1 - directory_entry->d_name ) ==
+    char *vm_pos = NULL;
+    vm_pos = strstr( directory_entry->d_name, ".vm" );
+    if( ( vm_pos - directory_entry->d_name ) ==
         ( strlen( directory_entry->d_name ) - strlen( ".vm" ) ) ) {
       //В имени не только .vm есть, но и расположен он в конце
       //Это образ состояния виртуалки. Загружаем
