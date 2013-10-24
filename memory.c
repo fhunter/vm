@@ -4,6 +4,7 @@
   */
 #include <stdio.h>
 #include "memory.h"
+#include "peripherials/peripherials.h"
 #include "vm.h"
 
 /** \brief Free the memory and clean bitmaps
@@ -54,6 +55,7 @@ void ivm_mem_put( struct t_virtual_machine *machine,
     }
   }
   else {
+    //Peripherial region
     //Video RAM
     if( addr > 0xff00 ) {
       printf( "\0337\033[%d;%dH%c\0338", ( 0xffff - addr ) / 16,
