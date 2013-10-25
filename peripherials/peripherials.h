@@ -1,4 +1,4 @@
-/** \file periperials.h
+/** \file peripherials.h
   * \author Nikolay Zamotaev
   */
 #ifndef _PERIPHERIALS__H_
